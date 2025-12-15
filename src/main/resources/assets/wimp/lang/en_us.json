@@ -1,0 +1,19 @@
+{
+  "wimp.hud.packet_loss": "Packet Loss: %d ms",
+  "wimp.hud.timeout_countdown": "Timeout: %d ms",
+
+  "wimp.config.title": "WIMP Configuration",
+  "wimp.config.general": "General",
+  "wimp.config.advanced": "Advanced",
+  "wimp.config.show_hud": "Show HUD",
+  "wimp.config.text_shadow": "Text Shadow",
+  "wimp.config.threshold": "Threshold (ms)",
+  "wimp.config.pos_x": "X Position",
+  "wimp.config.pos_y": "Y Position",
+  "wimp.config.show_packet_loss": "Show Packet Loss",
+  "wimp.config.show_timeout_countdown": "Show Timeout Countdown",
+  "wimp.config.show_packet_type": "Show Packet Type",
+  "wimp.config.default_color": "Default Color",
+  "wimp.config.threshold_bad": "Bad Threshold",
+  "wimp.config.threshold_bad_color": "Bad Threshold Color"
+}

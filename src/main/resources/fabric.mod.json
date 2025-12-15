@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "wimp",
+  "version": "${version}",
+  "name": "Where Is My Packet?",
+  "description": "A simple HUD mod that detects packet loss.",
+  "authors": ["greneboy"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/wimp/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "greneboy.wimp.client.WimpDataGenerator"
+    ],
+    "client": [
+      "greneboy.wimp.client.WimpClient"
+    ],
+    "modmenu": [
+      "greneboy.wimp.client.integration.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "wimp.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "cloth-config": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
+  }
+}
