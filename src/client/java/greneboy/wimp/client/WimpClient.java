@@ -39,14 +39,13 @@ public class WimpClient implements ClientModInitializer {
     }
 
     private static void renderHud(GuiGraphics context) {
-        if (!WimpClient.config.show_hud) return;
+        Minecraft minecraft = Minecraft.getInstance();
+
+        if (!WimpClient.config.show_hud || minecraft.isSingleplayer()) return;
         if (WimpPacketTracker.lastPacketTime == -1L) return;
 
         long delta = System.currentTimeMillis() - WimpPacketTracker.lastPacketTime;
-
         if (delta < WimpClient.config.threshold_ms) return;
-
-        Minecraft minecraft = Minecraft.getInstance();
 
         long timeUntilDisconnect = Math.max(0, 30000 - delta);
 
