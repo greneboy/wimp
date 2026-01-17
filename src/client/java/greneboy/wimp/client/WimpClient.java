@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class WimpClient implements ClientModInitializer {
         // Attach HUD element before the chat
         HudElementRegistry.attachElementBefore(
                 VanillaHudElements.CHAT,
-                ResourceLocation.fromNamespaceAndPath(MOD_ID, "wimp_delta"),
+                Identifier.fromNamespaceAndPath(MOD_ID, "wimp_delta"),
                 (context, deltaTracker) -> renderHud(context)
         );
 
