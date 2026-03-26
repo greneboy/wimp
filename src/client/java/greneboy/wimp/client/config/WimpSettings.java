@@ -98,9 +98,7 @@ public class WimpSettings {
                 .build()
         );
 
-        builder.setSavingRunnable(() -> {
-            AutoConfig.getConfigHolder(WimpConfig.class).save();
-        });
+        builder.setSavingRunnable(() -> AutoConfig.getConfigHolder(WimpConfig.class).save());
 
         return builder.build();
     }
