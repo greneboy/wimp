@@ -10,6 +10,6 @@ import net.fabricmc.api.Environment;
 public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> WimpSettings.getConfigScreen(parent);
+        return WimpSettings::getConfigScreen;
     }
 }
