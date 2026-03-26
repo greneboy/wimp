@@ -3,6 +3,9 @@ plugins {
     id 'maven-publish'
 }
 
+def localProps = new Properties()
+file("local.properties").withInputStream { localProps.load(it) }
+
 version = project.mod_version
 group = project.maven_group
 
