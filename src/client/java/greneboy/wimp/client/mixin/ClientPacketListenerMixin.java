@@ -19,7 +19,7 @@ public class ClientPacketListenerMixin {
     private void onChannelRead(ChannelHandlerContext ctx, Packet<?> packet, CallbackInfo ci) {
         long now = System.currentTimeMillis();
 
-        WimpPacketTracker.lastPacketType = packet.getClass().getSimpleName();
+        WimpPacketTracker.lastPacketType = packet.getPacketType().id().toShortString();
         WimpPacketTracker.lastPacketTime = now;
     }
 }
