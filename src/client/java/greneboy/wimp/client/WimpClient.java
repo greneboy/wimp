@@ -7,10 +7,10 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class WimpClient implements ClientModInitializer {
         // Attach HUD element before the chat
         HudElementRegistry.attachElementBefore(
                 VanillaHudElements.CHAT,
-                Identifier.fromNamespaceAndPath(MOD_ID, "wimp_delta"),
+                Identifier.of(MOD_ID, "wimp_delta"),
                 (context, deltaTracker) -> renderHud(context)
         );
 
@@ -38,10 +38,10 @@ public class WimpClient implements ClientModInitializer {
         WimpClient.config = AutoConfig.getConfigHolder(WimpConfig.class).getConfig();
     }
 
-    private static void renderHud(GuiGraphics context) {
-        Minecraft minecraft = Minecraft.getInstance();
+    private static void renderHud(DrawContext context) {
+        MinecraftClient minecraft = MinecraftClient.getInstance();
 
-        if (!WimpClient.config.show_hud || minecraft.isSingleplayer()) return;
+        if (!WimpClient.config.show_hud || minecraft.isInSingleplayer()) return;
         if (WimpPacketTracker.lastPacketTime == -1L) return;
 
         long delta = System.currentTimeMillis() - WimpPacketTracker.lastPacketTime;
@@ -52,10 +52,10 @@ public class WimpClient implements ClientModInitializer {
         List<String> parts = new ArrayList<>();
 
         if (config.show_packet_loss) {
-            parts.add(Component.translatable("wimp.hud.packet_loss", delta).getString());
+            parts.add(Text.translatable("wimp.hud.packet_loss", delta).getString());
         }
         if (config.show_timeout_countdown) {
-            parts.add(Component.translatable("wimp.hud.timeout_countdown", timeUntilDisconnect).getString());
+            parts.add(Text.translatable("wimp.hud.timeout_countdown", timeUntilDisconnect).getString());
         }
         if (config.show_packet_type) {
             parts.add(WimpPacketTracker.lastPacketType);
@@ -67,8 +67,8 @@ public class WimpClient implements ClientModInitializer {
         if (delta > WimpClient.config.threshold_ms_bad) color = WimpClient.config.text_bad_color;
         else color = WimpClient.config.text_default_color;
 
-        context.drawString(
-                minecraft.font,
+        context.drawText(
+                minecraft.textRenderer,
                 message,
                 WimpClient.config.position_x,
                 WimpClient.config.position_y,
