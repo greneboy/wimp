@@ -11,6 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,19 +48,7 @@ public class WimpClient implements ClientModInitializer {
         long delta = System.currentTimeMillis() - WimpPacketTracker.lastPacketTime;
         if (delta < WimpClient.config.threshold_ms) return;
 
-        long timeUntilDisconnect = Math.max(0, 30000 - delta);
-
-        List<String> parts = new ArrayList<>();
-
-        if (config.show_packet_loss) {
-            parts.add(Text.translatable("wimp.hud.packet_loss", delta).getString());
-        }
-        if (config.show_timeout_countdown) {
-            parts.add(Text.translatable("wimp.hud.timeout_countdown", timeUntilDisconnect).getString());
-        }
-        if (config.show_packet_type) {
-            parts.add(WimpPacketTracker.lastPacketType);
-        }
+        List<String> parts = getStrings(delta);
 
         String message = String.join(" | ", parts);
 
@@ -75,6 +64,23 @@ public class WimpClient implements ClientModInitializer {
                 color,
                 WimpClient.config.text_shadow
         );
+    }
+
+    private static @NonNull List<String> getStrings(long delta) {
+        long timeUntilDisconnect = Math.max(0, 30000 - delta);
+
+        List<String> parts = new ArrayList<>();
+
+        if (config.show_packet_loss) {
+            parts.add(Text.translatable("wimp.hud.packet_loss", delta).getString());
+        }
+        if (config.show_timeout_countdown) {
+            parts.add(Text.translatable("wimp.hud.timeout_countdown", timeUntilDisconnect).getString());
+        }
+        if (config.show_packet_type) {
+            parts.add(WimpPacketTracker.lastPacketType);
+        }
+        return parts;
     }
 
 }
