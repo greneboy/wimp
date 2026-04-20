@@ -1,11 +1,8 @@
 plugins {
-    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
     id "com.modrinth.minotaur" version "2.+"
     id 'maven-publish'
 }
-
-def localProps = new Properties()
-file("local.properties").withInputStream { localProps.load(it) }
 
 version = project.mod_version
 group = project.maven_group
@@ -50,15 +47,15 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:$project.yarn_mappings:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}") {
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    compileOnly("com.terraformersmc:modmenu:${project.modmenu_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
+    api("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 }
@@ -76,7 +73,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 21
+def targetJavaVersion = 25
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly
@@ -124,12 +121,12 @@ publishing {
 }
 
 modrinth {
-    token = localProps["MODRINTH_TOKEN"]
+    token = System.getenv("MODRINTH_TOKEN")
     projectId = "rtyb8hue"
     versionNumber = "${mod_version}"
     versionType = "release"
     uploadFile = jar
-    gameVersions = ["1.21.11"]
+    gameVersions = ["26.1", "26.1.1", "26.1.2"]
     loaders = ["fabric"]
     dependencies {
         required.project "fabric-api"
