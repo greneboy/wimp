@@ -10,8 +10,8 @@ public class WimpConfig implements ConfigData {
     public int position_x = 4;
     public int position_y = 4;
     public boolean show_packet_loss = true;
-    public boolean show_packet_type = false;
-    public boolean show_timeout_countdown = false;
+    public boolean show_packet_type = true;
+    public boolean show_timeout_countdown = true;
     public boolean text_shadow = true;
     public int threshold_ms_bad = 1000;
     public int text_default_color = 0xFFFFFF00;
